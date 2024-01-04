@@ -7,24 +7,34 @@ import streamlit as st
 import time
 import pickle
 
+# Untuk Load Data 
 with open("data/hungarian.data", encoding='Latin1') as file:
   lines = [line.strip() for line in file]
 
+# Melakukan penggabungan/ dijabarkan dari 76 fitur atau di buat 1 string untuk di jabarkan
 data = itertools.takewhile(
   lambda x: len(x) == 76,
   (' '.join(lines[i:(i + 10)]).split() for i in range(0, len(lines), 10))
 )
 
+# Buat DataFrame
 df = pd.DataFrame.from_records(data)
 
+# Hapus data set awal dan terakhir karena fitur yang tidak di gunakan
 df = df.iloc[:, :-1]
 df = df.drop(df.columns[0], axis=1)
+
+ # Ubah data jadi float karena nilai null = -9,0 yang tadinya objek diubah menjadi float
 df = df.astype(float)
 
-df.replace(-9.0, np.NaN, inplace=True)
+# Validasi data untuk menghilangkan/mengubah data yang tidak di butuhkan atau null (-9.0) diubah jadi nan
+df.replace(-9.0, np.NaN, inplace=True) # untuk memahami isi dataset
 
+# Menentukan Objek Data
+# memilih 14 fitur dalam deskripsi untuk ditampilkan
 df_selected = df.iloc[:, [1, 2, 7, 8, 10, 14, 17, 30, 36, 38, 39, 42, 49, 56]]
 
+# Menamai nama coloumn supaya sesuai deskripsi yang diberikan
 column_mapping = {
   2: 'age',
   3: 'sex',
