@@ -20,11 +20,11 @@ data = itertools.takewhile(
 # Buat DataFrame
 df = pd.DataFrame.from_records(data)
 
-# Hapus data set awal dan terakhir karena fitur yang tidak di gunakan
+# Menghapus data set awal dan terakhir karena fitur yang tidak di gunakan
 df = df.iloc[:, :-1]
 df = df.drop(df.columns[0], axis=1)
 
- # Ubah data jadi float karena nilai null = -9,0 yang tadinya objek diubah menjadi float
+ # Mengubah data jadi float karena nilai null = -9,0 yang tadinya objek diubah menjadi float
 df = df.astype(float)
 
 # Validasi data untuk menghilangkan/mengubah data yang tidak di butuhkan atau null (-9.0) diubah jadi nan
@@ -34,7 +34,7 @@ df.replace(-9.0, np.NaN, inplace=True) # untuk memahami isi dataset
 # memilih 14 fitur dalam deskripsi untuk ditampilkan
 df_selected = df.iloc[:, [1, 2, 7, 8, 10, 14, 17, 30, 36, 38, 39, 42, 49, 56]]
 
-# Menamai nama coloumn supaya sesuai deskripsi yang diberikan
+# Menamai/Mengganti nama coloumn supaya sesuai deskripsi yang diberikan
 column_mapping = {
   2: 'age',
   3: 'sex',
